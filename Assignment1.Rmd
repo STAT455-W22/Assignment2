@@ -1,0 +1,211 @@
+---
+title: "STAT 455: Assignment 1"
+author: "Your Name"
+date: ""
+output: html_document
+---
+
+In the 1970's the Harris Trust Bank was sued for discrimination on the basis of gender and race. You can read about the case and ultimate settlement [here](https://www.nytimes.com/1989/01/11/us/chicago-bank-to-pay-14-million-in-resolving-discrimination-case.html). 
+
+In this assignment, we'll investigate whether there is evidence of gender discrimination by Harris Trust. 
+
+Feel free to create or delete chunks of R code in this template as you see fit. 
+
+```{r, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, message=FALSE, warning=FALSE, fig.height = 3, fig.width = 7)
+```
+
+```{r}
+library(tidyverse)
+library(GGally)
+```
+
+### The Data
+
+The data are described in exercise 1.8.2 of the text:
+
+In the 1970’s, Harris Trust was sued for gender discrimination in the salaries it paid its employees.  One approach to addressing this issue was to examine the starting salaries of all skilled, entry-level clerical workers between 1965 and 1975.  The following variables, which can be found in `banksalary.csv`, were collected for each worker (Ramsey and Schafer 2002):
+
+    - `bsal` = beginning salary (annual salary at time of hire)   
+    - `sal77` = annual salary in 1977   
+    - `sex` = MALE or FEMALE   
+    - `senior` = months since hired    
+    - `age` = age in months    
+    - `educ` = years of education     
+    - `exper` = months of prior work experience </ul>     
+Creating an indicator variable based on `sex` could be helpful.  
+
+We'll read in the data from the textbook's Github repository.
+
+```{r}
+banksalary <- read_csv("https://raw.githubusercontent.com/proback/BeyondMLR/master/data/banksalary.csv")
+```
+
+## Question 1
+
+##### We'll perform an exploratory data analysis to investigate characteristics of the data.   
+
+##### a) Calculate the mean beginning salaries for male and female employees, and the number of male and female employees.   
+
+```{r}
+# Type code here
+```
+
+
+##### b) Create side-by-side boxplots to compare starting salaries for men and women.   
+
+```{r}
+# Type code here
+```
+
+##### c) Create a scatterplot matrix displaying relationships between "bsal", "age", "exper", "educ", "sex". Hint: Use `ggpairs`. 
+
+```{r}
+# Type code here
+```
+
+
+##### d) Summarize your observations from the scatterplot matrix. Is there strong correlation between any of the quantitative variables? Do there appear to be differences in age, prior work experience, or education level between men and women? If so, describe these differences. (Note: `FEMALE` appears in left side of the `sex` column and the top of the `sex` row in the scatterplot matrix).    
+
+Type text here. 
+
+##### e) Do the table and exploratory plots in (a) - (d) show signs of gender discrimination in starting salary? Justify your answer.   
+
+Type text here. 
+
+## Question 2
+
+##### The company might argue that the differences we see in (1) are not really evidence of gender discrimination, but instead are the result of differences in education and prior work experience. We'll use a statistical model to investigate whether there is evidence of differences in starting salary between men and women after accounting for these factors.   
+
+
+##### a) The data were collected in 1977. The `senior` variable shows the number of months the employee had been working at the bank as of 1977. Why might it be important to control for seniority (number of years with the bank) in our model, even though we are using starting salary as the response variable? Hint: Consider the scatterplot comparing `bsal` salary and `senior` in the scatterplot matrix.    
+
+Type text here. 
+
+##### b) Explain why including both `age` and `exper` as explanatory variables in our model might not be a good idea.  
+
+Type text here. 
+
+
+##### c) Fit a multiple regression model with beginning salary as the response variable, and experience, education, sex, and seniority as explanatory variables. Display the model coefficients table. 
+
+
+```{r}
+# Type code here
+```
+
+##### d) Do the linearity, constant variance, normality, and independence assumptions appear reasonable? Display appropriate plots to support your answer. 
+
+```{r}
+# Type code here
+```
+
+Type text here. 
+
+##### e) Explain in words what an interaction between sex and education would mean in this context. 
+
+Type text here. 
+
+##### f) Create a scatterplot that can be used to investigate whether there is evidence of an interaction between education and sex. Does the plot provide visual evidence of such an interaction?    
+
+```{r}
+#type code here
+```
+
+Type text here. 
+
+##### g) Add an interaction between sex and education to the model. Display the model output. Do the data provide evidence of an interaction between education and sex? Explain your answer.    
+
+```{r}
+#type code here
+```
+
+Type text here. 
+
+##### h) Now consider a model that includes only sex and education as explanatory variables. Use an appropriate statistical test to compare this model to the model in part (c). Explain your conclusions. 
+
+```{r}
+#type code here
+```
+
+Type text here. 
+
+## Question 3
+
+##### We proceed with the model in Question 2(c).   
+
+
+##### a) Write a sentence interpreting the estimate on the `sexMALE` line of the model output.     
+
+Type text here. 
+
+##### b) Calculate confidence intervals for the model coefficients in your model. Interpret the interval for the `sexMALE` coefficient.    
+
+```{r}
+#Type code here
+```
+
+Type text here. 
+
+##### c) Calculate the predicted starting salary and a 95% prediction interval for a female employee with 15 years of education, 85 months of seniority, and 100 months of experience. Do the same for a a male employee with the same experience, education, and seniority.    
+
+```{r}
+#type code here
+```
+
+
+```{r}
+#type code here
+```
+
+Type text here. 
+
+##### d) Calculate intervals that we can be 95% confident contain the average starting salary among all female employees with 15 years of education, 85 months of seniority, and 100 months of experience. Do the same for the average starting salary among all male employees with the same experience, education, and seniority.    
+
+```{r}
+#Type code here
+```
+
+
+```{r}
+#Type code here
+```
+
+Type text here. 
+
+## Question 4
+
+##### Since salary data is often right-skewed, it is common to model the natural logarithm (`log` in R) of salary, rather than salary itself. 
+
+##### a) Does modeling `log(salary)` appear to be necessary in this context? Hint: Consider the residual plots in Queston 2.    
+
+Type text here. 
+
+##### b) Regardless of your answer for (a) fit a model for `log(salary)`.     
+
+```{r}
+#Type code here
+```
+
+
+##### c) Using this model, how many times higher is a man's salary expected to be, compared to a woman with the same education, seniority, and prior experience.     
+
+Type text here. 
+
+##### d) Use the log model to calculate the predicted starting salary for a female employee with 15 years of education, 85 months of seniority, and 100 months of experience. 
+
+```{r}
+#Type code here
+```
+
+
+```{r}
+#Type code here
+```
+
+
+## Question 5
+
+##### Write a paragraph summarizing your findings. Do the data provide evidence of gender discrimination at the bank, after accounting for other relevant variables? Cite appropriate estimates, confidence intervals, and p-values to support your answer.   
+
+Type text here. 
