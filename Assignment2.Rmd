@@ -1,0 +1,187 @@
+---
+title: "STAT 455: Assignment 2"
+author: ""
+date: ""
+output: html_document
+---
+
+In this assignment, we'll explore data from two different fictional datasets relating to the growth of plants, which are arranged in trays. In each situation, we are interested in comparing the effect of two different brands of fertilizer on plant growth. We also want to study how the amount of fertilizer applied impacts growth. We'll look at two different ways that the treatments might be assigned to the plants within trays. 
+
+See the Assignment 2 Illustration on Canvas for an illustration of the ways the plants are arranged in each scenario.   
+
+```{r, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, message=FALSE, warning=FALSE, fig.height = 3, fig.width = 7)
+```
+
+We'll load the packages we'll need. Be sure to install these first. 
+
+```{r}
+library(tidyverse)
+library(lme4)
+library(lmerTest)
+```
+
+
+
+## Question 1
+
+
+##### An experiment was conducted to compare the effects of two different fertilizers on plants. Twelve plants were grown in each of eight trays, for a total of 96 plants. Fertilizers were randomly assigned to entire trays, so that all plants in a tray received the same fertilizer, and each fertilizer was used on four different trays. The amount of fertilizer applied to each plant (in ounces) also varied between trays. Two trays received 2, oz, two received, 4 oz, two received 6 oz, and two received 8 oz. Plants in the same tray received the same amount of fertilizer. (See the diagram for an illustration.) The growth of each plant (in cm.) over a two week period was recorded.  
+
+##### The data are loaded below.      
+
+```{r}
+plants <- read_csv("https://raw.githubusercontent.com/AndrewjSage/andrewjsage.github.io/master/Datasets/Plants.csv")
+```
+
+##### a) Create a scatterplot, plotting growth against amount of fertilizer. Use shape to denote brand of fertilizer, and color to denote tray. You may wish to jitter the points to make differences more apparent.      
+
+```{r}
+#type code here
+```
+
+##### b) Does there appear to be a relationship between amount of fertilizer applied and growth? Does one brand of fertilizer appear to be more effective than the other, assuming they are applied in the same amounts?    
+
+Type text here
+
+##### c) Fit a linear least-squares regression model, using brand and amount as explanatory variables - i.e a model of the following form:
+
+\[
+Y_{ij}  = \beta_{0}+\beta_1\textrm{Brand2}_{ij} + \alpha\textrm{Amount}_{ij}  + \epsilon_{ij}. 
+\]
+
+
+#### Interpret the estimates on the brand and amount lines.  Based on this model, does there appear to be evidence of a relationship between amount of fertilizer applied and plant growth? Does one brand appear more effective than the other?
+
+
+```{r}
+#type code here
+```
+
+type text here
+
+##### d) Explain why the LLSR model is inappropriate for these data.    
+
+type text here
+
+##### e) An appropriate analysis of these data should involve consideration of two fixed effects and one random effect. What are these?    
+
+type text here
+
+##### f) Let $Y_{ij}$ represent growth of plant $j$ in tray $i$. (i=1,2 and j=1, \ldots, 6). We will work with a random effects model of the form: 
+
+\[
+Y_{ij}  = \beta_{0}+\beta_1\textrm{Brand2}_{ij} + \alpha\textrm{Amount}_{ij} + t_{i} + \epsilon_{ij},
+\]
+
+ where $t_i\sim\mathcal{N}(0, \sigma^2_t)$, and $\epsilon_{ij} \sim\mathcal{N}(0, \sigma^2)$.  
+
+
+##### Fit the model, using the `lmer` function in R. 
+
+```{r}
+#type code here
+```
+
+##### f) Interpret the estimates in the standard deviation column of the "Random effects" table.       
+
+type text here
+
+##### g) Compare the parameter estimates in the fixed effects table to those in the (inappropriate) linear least-squares model. How do the standard errors and p-values compare? Do we reach the same conclusions?    
+
+type text here
+
+##### h) Explain why it is inappropriate to think of our sample size as being 96 plants in this scenario. What are the appropriate observational units, and what is the actual sample size for determining the effects of brand and amount? 
+
+type text here
+
+
+##### i) Now use the `group_by()` and `summarize()` commands to create a version of the plants dataset that contains only one row for each tray. Your new dataset should contain the tray number, brand, amount, and average growth. (Hint, you can group by tray and use mean() inside the summarize function for all of the other variablesm since brand and amount are the same in each tray.) Display your summary dataset, which should have 8 rows. 
+
+```{r}
+#type code here
+```
+
+##### j) Fit a linear least squares regression model with brand and amount as explanatory variables to the summary dataset in (i). Compare your estimates, standard errors, and p-values to those in the fixed effects table from your mixed effects model in part (e).
+
+```{r}
+#type code here
+```
+
+Type text here.
+
+## Question 2 
+
+##### Now consider a different version of the experiment in Question 2. In this version, the plants are planted in separate plots, which are then placed in the 8 trays. All 12 plants in each tray still receive the same brand of fertilizer, but the amount applied is randomly assigned to pots, so that within each tray, three pots get 0 oz, three get 3 oz, three get 6 oz, and three get 9 oz. (See illustration).    
+##### We load the data. 
+
+```{r}
+plants2 <- read_csv("https://raw.githubusercontent.com/AndrewjSage/andrewjsage.github.io/master/Datasets/Plants2.csv")
+```
+
+
+##### a) Create a scatterplot, plotting growth against amount of fertilizer. Use shape to denote brand of fertilizer, and color to denote tray.      
+
+```{r}
+#type code here
+```
+
+
+##### b) Does there appear to be a relationship between amount of fertilizer applied and growth? Does one brand of fertilizer appear to be more effective than the other, assuming they are applied in the same amounts?    
+
+Type text here.
+
+##### c) Fit a linear least-squares regression model, using brand and amount as explanatory variables - i.e a model of the following form:
+
+\[
+Y_{ij}  = \beta_{0}+\beta_1\textrm{Brand2}_{ij} + \alpha\textrm{Amount}_{ij}  + \epsilon_{ij}. 
+\]
+
+
+##### Based on this model, does there appear to be evidence of a relationship between amount of fertilizer applied and plant growth? Does one brand appear more effective than the other? You do not need to interpret the coefficients again. 
+
+```{r}
+#type code here
+```
+
+Type text here. 
+
+##### c) Fit a linear mixed effects model of the form
+
+\[
+Y_{ij}  = \beta_{0}+\beta_1\textrm{Brand2}_{ij} + \alpha\textrm{Amount}_{ij} + t_{i} + \epsilon_{ij},
+\]
+
+where $t_i\sim\mathcal{N}(0, \sigma^2_t)$, and $\epsilon_{ij} \sim\mathcal{N}(0, \sigma^2)$,  
+
+##### using the `lmer` function in R. Note that while the mathematical form of the model, as well as its implementation in R are identical to those in Question 1. It will yield different results due to the different structure of the data, and the different values in the dataset.  
+
+```{r}
+#type code here
+```
+
+##### d) Compare the parameter estimates in the fixed effects table to those in the (inappropriate) linear least-squares model in (b). How do the standard errors and p-values compare? Do we reach the same conclusions?    
+
+Type text here
+
+##### e) Interpret the estimates in the standard deviation column of the "Random effects" table.       
+
+Type text here
+
+##### f) We saw in Question 1, that performing a LLSR analysis on the tray means yielded the same conclusions for brand and amount as the mixed effects model. Would that approach work in this situation? Why or why not?
+
+Type text here
+
+##### g) This is an example of a multilevel experiment. What are the observational units and the treatment assigned at level 1? What are the observational units and the treatment assigned at level 2?    
+
+Type text here
+
+## Question 3
+
+##### Consider the experimental designs in Questions 1 and 2. If you were designing the experiment and could choose either design, at equal cost, which would you choose? Why?
+
+Type text here
+
+
+
+

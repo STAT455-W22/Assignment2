@@ -177,7 +177,7 @@ Type text here.
 
 ##### Since salary data is often right-skewed, it is common to model the natural logarithm (`log` in R) of salary, rather than salary itself. 
 
-##### a) Does modeling `log(salary)` appear to be necessary in this context? Hint: Consider the residual plots in Queston 2.    
+##### a) Does modeling `log(salary)` appear to be necessary in this context? Hint: Consider the residual plots in Question 2.    
 
 Type text here. 
 
