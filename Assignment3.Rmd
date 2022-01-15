@@ -1,0 +1,211 @@
+---
+title: "STAT 455: Assignment 3"
+author: ""
+output: html_document
+---
+
+In this assignment, we'll investigate factors related to prices of AirBnB's in Chicago. The data are part of Open Exercise 2 in Section 8.13.3 of the Roback and Legler text.  
+
+
+Trinh (2018) collected data on 1561 Airbnb listings in Chicago from August 2016, and then they merged in information from the neighborhood (out of 43 in Chicago) where the listing was located. The dataset contains information on the following variables. 
+
+    - `overall_satisfaction` = rating on a 0-5 scale.
+    - `price` = price for one night (in dollars)
+    - `reviews` = number of reviews posted
+    - `room_type` = Entire home/apt, Private room, or Shared room
+    - `accommodates` = number of people the unit can hold
+    - `bedrooms` = number of bedrooms
+    - `minstay` = minimum length of stay (in days)
+    - `neighborhood` = neighborhood where unit is located (1 of 43)
+    - `district` = district where unit is located (1 of 9)
+    - `WalkScore` = quality of the neighborhood for walking (0-100)
+    - `TransitScore` = quality of the neighborhood for public transit (0-100)
+    - `BikeScore` = quality of the neighborhood for biking (0-100)
+    - `PctBlack` = proportion of Black residents in a neighborhood
+
+We'll read in the data. 
+
+```{r}
+Airbnb <- read_csv("https://raw.githubusercontent.com/proback/BeyondMLR/master/data/airbnb.csv")
+```
+
+The full data are available at (https://github.com/proback/BeyondMLR/blob/master/data/airbnb.csv). 
+
+
+
+```{r, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, message=FALSE, warning=FALSE, fig.height = 3, fig.width = 7)
+```
+
+```{r}
+library(tidyverse)
+library(lme4)
+library(lmerTest)
+library(gridExtra)
+```
+
+
+## Question 1
+
+
+#### a) Explain why this can be thought of as a multilevel dataset. Which of the variables listed above are level one variables? Which are level two variables?      
+
+```{r}
+#type code here
+```
+
+Type text here. 
+
+#### b) We are interested in analyzing the relationship between explanatory variables `bedrooms`, `TransitScore`, and response variable `price`. Explain why, in this context, it makes sense to treat neighborhood as a random effect.      
+
+Type text here. 
+
+#### c) Give an example of a research question for which it would make sense to fit a model with  neighborhood as a fixed effect. 
+
+Type text here. 
+
+#### d) Perform an exploratory data analysis involving the three variables mentioned in (b). Create histograms displaying the distributions over all 1,561 observations, as well as the distribution of averages in the 43 neighborhoods. Also create scatterplots comparing response and explanatory variables for both individual observations and neighborhood averages. Include the line of best fit on each scatterplot. Briefly summarize your findings. 
+
+
+```{r}
+#type code here
+```
+
+Type text here. 
+
+
+#### e) Continue your exploratory data analysis by creating lattice plots displaying `price` vs `bedrooms` for each of the 43 neighborhoods. Include a line of best fit on each plot. 
+
+```{r}
+#type code here
+```
+
+
+
+## Question 2 
+
+
+#### a) Let $Y_{ij}$ denote the price of the $jth$ AirBnB listing in neighborhood $i$. Fit a multilevel model of the form,
+
+\[
+Y_{ij} = [\alpha_{0}+\alpha_{1}\textrm{TransitScore}_{i}+\beta_{0}\textrm{bedrooms}_{ij}+\beta_{1}\textrm{TransitScore}_{i}\textrm{bedrooms}_{ij}] +  \\
+\textrm{} + [u_{i}+v_{i}\textrm{bedrooms}_{ij}+\epsilon_{ij}],
+\]
+
+
+where $\epsilon_{ij}\sim\mathcal{N}(0, \sigma^2)$, and 
+
+$$
+\left[ \begin{array}{c}
+            u_{i} \\ v_{i}
+          \end{array}  \right] \sim \mathcal{N} \left( \left[
+          \begin{array}{c}
+            0 \\ 0
+          \end{array} \right], \left[
+          \begin{array}{cc}
+            \sigma_{u}^{2} & \rho_{uv}\sigma_{u}\sigma_v \\
+            \rho_{uv}\sigma_{u}\sigma_v & \sigma_{v}^{2}
+          \end{array} \right] \right).
+$$
+
+#### Use `REML=TRUE`. You do not need to interpret the model estimates at this time. 
+
+
+```{r}
+#type code here
+```
+
+
+#### b) You should have seen a coefficient of $1.3343$ for the `TransitScore` variable. Explain why it is incorrect to say that price is expected to increase by 1.3343 dollars for each one unit increase in transit score, assuming number of bedrooms is held constant.  
+
+Type text here. 
+
+#### c) Write the equation of the regression lines relating price and transit score for an AirBnB with one bedroom. Do the same for an AirBnB with two bedrooms. 
+
+Template (fill in appropriate numbers):  
+
+\[\widehat{\text{Price}} = 1 + 2 \times \text{Transit Score} 
+\]
+
+Type text here.
+
+#### d) Interpret the slope of each equation in (c). 
+
+Type text here. 
+
+#### e) This model contains three random terms, $u_i$, $v_i$, and $\epsilon_{ij}$. Explain what each of these three terms represent in context of AirBnB prices. 
+
+Type text here. 
+
+#### f) Give the estimate of $\rho_{uv}$ and interpret it in context of AirBnB prices. 
+
+Type text here. 
+
+#### g) Now fit a multilevel model that does not include an error term for slope at level two, that is, a model of the form:
+
+\[
+Y_{ij}  = [\alpha_{0}+\alpha_{1}\textrm{TransitScore}_{i}+\beta_{0}\textrm{bedrooms}_{ij}+\beta_{1}\textrm{TransitScore}_{i}\textrm{bedrooms}_{ij}] \\
+  \textrm{} + [u_{i}+\epsilon_{ij}],
+\]
+
+#### where $\epsilon_{ij}\sim N(0,\sigma^2)$ and $u_{i}\sim N(0,\sigma_{u}^{2})$.   
+
+
+#### Use `REML=TRUE`. You do not need to interpret parameter estimates at this point.    
+
+
+
+```{r}
+#type code here
+```
+
+
+#### h) Explain in context the difference between the models in parts (a) ang (g). What does each model say about the relationship between transit score, bedrooms, and price?
+
+Type text here. 
+
+#### i) Using the model in part (g), give estimates of $\sigma_u$ and $\sigma$. Interpret each of these estimates. What do these tell us about the amount of variability in prices between neighborhoods, relative to the amount of variability in prices for AirBnB's in the same neighborhood.  
+
+Type text here. 
+
+#### k) Calculate AIC and BIC for the models from parts (a) and (g). Which model is preferred?   
+
+```{r}
+#type code here
+```
+
+Type text here.
+
+#### l) Now fit an unconditional means model, that is a model of the form: 
+
+\[
+Y_{ij}  = \alpha_{0} + [u_{i}+\epsilon_{ij}],
+\]
+
+#### where $u_i\sim N(0, \sigma^2_u)$ and $\epsilon_{ij}\sim N(0, \sigma^2)$. 
+
+#### Calculate and interpret the intraclass correlation coefficient. 
+
+#### k) Why are the estimates of $\sigma_u$ and $\sigma$ in (l) different than in (i). How do our interpretations change?   
+
+```{r}
+#type code here
+```
+
+Type text here.
+
+## Question 3   
+
+#### A travel agency is interested in investigating questions such as: What are characteristics of a higher priced listing? Are the most influential traits associated with individual listings or entire neighborhoods? Are there intriguing interactions where the effect of one variable depends on levels of another? Build a model that can be used to address these questions, and report your key findings. Use AIC and BIC, as well as likelihood ratio tests to justify whether to include variables and/or interactions from your model. Then summarize your key findings in a manner similar to what is done on slide 3.5.10 in the Stat 455 notes. (You don't need to interpret every coefficient in the model, but state which are associated with higher or lower prices, and provide a few key interpetations.)
+
+#### There are many possible options for a final model. You will be graded based on your justification and interpretations, rather than on the variables you include in your model.   
+
+```{r}
+#Type code here
+```
+
+Type text here. 
+
+
+
+
