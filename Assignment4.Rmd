@@ -1,0 +1,232 @@
+---
+title: "STAT 455: Assignment 4"
+author: "Your Name"
+output: html_document
+---
+
+
+```{r, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, message=FALSE, warning=FALSE, fig.height = 3, fig.width = 7)
+```
+
+One response to emergency department overcrowding in hospitals is “ambulance diversion”—closing its doors and forcing ambulances to bring patients to alternative hospitals. The California Office of Statewide Health Planning and Development collected data on how often hospitals enacted “diversion status”, enabling researchers to investigate factors associated with increasing amounts of ambulance diversions. The `ambulance3.csv` dataset contains observations from 184 California hospitals over a 3-year period (2013-2015):
+
+Although there are other variables in the dataset, we will focus on the following variables. 
+
+
+    - `diverthours` = number of hours of diversion status over the year     
+    - `year2013` = years since 2013
+    - `totalvisits1` = total number of patient visits to the emergency department over the year (in 1000s)
+    - `ems_basic` = 1 if the emergency department can only handle a basic level of severity; 0 if the emergency department can handle higher levels of severity
+    - `stations` = number of emergency department stations available for patients (fixed over 3 years)
+
+```{r}
+# Load needed packages
+library(tidyverse)
+library(lme4)
+library(lmerTest)
+library(Hmisc)
+library(nlme)
+summarize <- dplyr::summarize
+```
+
+
+```{r}
+# read in data and select relevant variables
+Hospitals <- read_csv("https://raw.githubusercontent.com/proback/BeyondMLR/master/data/ambulance3.csv")
+Hospitals <- Hospitals %>% select(id, diverthours, year2013, totalvisits1, ems_basic, stations) %>% arrange(id, year2013)
+head(Hospitals)
+```
+
+The full data are available at (https://github.com/proback/BeyondMLR/blob/master/data/airbnb.csv). 
+
+Note that most hospitals have three observations, one for each year in the dataset. 
+
+
+## Question 1
+
+
+#### a) Explain why this can be thought of as a multilevel dataset. Which of the variables listed above are level one variables? Which are level two variables?      
+
+Type here
+
+#### b) Create a histogram displaying the average number of divert hours per year for each hospital. Write a sentence describing the distribution.    
+
+```{r}
+#Type here
+```
+
+```{r}
+#Type here
+```
+
+Type here
+
+#### c) Create a boxplot comparing EMS level to average number of divert hours. Write a sentence describing your findings.     
+
+```{r}
+#Type here
+```
+
+Type here
+
+#### d) Create a scatterplot comparing number of stations to average number of divert hours. Write a sentence describing your findings.    
+
+```{r}
+#Type here
+```
+
+Type here
+
+
+#### e) Create lattice plots displaying the number of divert hours over time for the 15 hospitals in the `Hospitals_sample` dataset given below. Write a sentence describing your findings. 
+
+```{r}
+Hospitals_Sample <- Hospitals %>% filter(id %in% c(106010735, 106190432, 106190017, 106190529, 106190125, 106190243, 106504042, 106190413, 106331164,  106190796,  106190687, 106301317, 106430883,  106190148))
+```
+
+
+```{r}
+#Type here
+```
+
+Type here
+
+#### f) Create latticed spaghetti plots that illustrate the relationship between divert hours and  EMS level. Include all hospitals, not only those in the sample above. Also include a trendline, using geom_smooth(). Write a sentence describing your findings.   
+
+```{r}
+#Type here
+```
+
+Type here
+
+#### g) Create latticed spaghetti plots that illustrate the relationship between divert hours and number of stations, broken down by quartile. Include all hospitals, not only those in the sample above. Also include a trendline, using geom_smooth(). (Hint: Use the `cut2` function, which is part of the `Hmisc` package.) Write a sentence describing your findings.    
+
+
+```{r}
+#Type here
+```
+
+Type here
+
+
+```{r, fig.width=10}
+#Type here
+```
+
+
+Type here
+
+
+## Question 2
+
+#### a) Let $Y_{ij}$ represent the number of divert hours for the ith hospital in the jth year. Fit an unconditional means model, of the form
+
+\[
+Y _{ij} = \alpha_{0} + u_{i} + \epsilon_{ij} \textrm{ with } u_{i} \sim N(0, \sigma^2_u) \textrm{ and } \epsilon_{ij} \sim N(0, \sigma^2)
+\]
+
+#### to the data. 
+
+```{r}
+#Type here
+```
+
+
+#### b) Calculate and interpret the intraclass correlation coefficient.  
+
+Type here
+
+#### c) Fit an unconditional growth model of the form
+
+\[
+Y_{ij}=\alpha_{0} + \beta_{0}\textrm{Year2013}_{ij}+u_{i}+v_{i}\textrm{Year2013}_{ij} + \epsilon_{ij}
+\]
+
+#### where $\epsilon_{ij}\sim N(0,\sigma^2)$ and
+
+\[
+ \left[ \begin{array}{c}
+            u_{i} \\ v_{i}
+          \end{array}  \right] \sim N \left( \left[
+          \begin{array}{c}
+            0 \\ 0
+          \end{array} \right], \left[
+          \begin{array}{cc}
+            \sigma_{u}^{2} & \\
+            \rho_{uv}\sigma_{u}\sigma_{u} & \sigma_{v}^{2}
+          \end{array} \right] \right) . 
+\]
+
+
+```{r}
+#Type here
+```
+
+
+#### d) For the model in the previous part, give the values of the estimates for parameters $\alpha_0$, $\beta_0$, $\sigma_u$, $\sigma_v$, $\sigma^2$, and $\rho_{uv}$. Interpret these estimates in context.   
+
+Type here
+
+#### e) Fit a model that includes both year, and EMS level as fixed effects. Do not include an interaction term. Assume that that divert hours vary randomly between hospitals, and that the yearly rate of change of divert hours also varies between hospitals. Display the summary output. You do not need to interpret model coefficients.
+
+```{r}
+#Type here
+```
+
+
+#### f) Modify the model in (e), to assume that divert hours vary randomly between hospitals, but change at a yearly rate that is the same for all hospitals. Display the summary output. You do not need to interpret model coefficients.
+
+```{r}
+#Type here
+```
+
+
+#### g) Use AIC and BIC to compare the models in (e) and (f). Which model is preferred? What does this say about the relationship between divert hours at hospitals over time?
+
+```{r}
+#Type here
+```
+
+```{r}
+#Type here
+```
+
+
+
+#### h) Add an interaction term relating year and EMS level to the preferred model in (g). Interpret the interaction coefficient in context.    
+
+```{r}
+#Type here
+```
+
+
+#### i) Add stations to the model in (h). Also add an interaction term between stations and year. Use a likelihood ratio test to compare this model to the model in (h). Interpret your results. Does number of stations at a hospital appear to be related to divert hours? Is there evidence of an interaction between year and number of stations? If so, what should we conclude from this?  
+
+```{r}
+#Type here
+```
+
+```{r}
+#Type here
+```
+
+
+## Question 3
+
+#### a) Using the same fixed and random effects from your preferred model so far, fit a first order autoregressive (AR-1) time series model. Use the code below to filter the dataset to hospitals that have data for all 3 years, and fit the model using only these hospitals. Display a summary of the model output. 
+
+```{r}
+# keep only hospitals with observed scores for all 3 years
+Hospitals <- Hospitals %>% select(-totalvisits1)
+Hospitals.wide <- pivot_wider(Hospitals, names_from = "year2013", values_from = "diverthours")
+Hospitals_all3yrs <- Hospitals %>% filter(id %in% Hospitals.wide[complete.cases(Hospitals.wide),]$id)
+```
+
+```{r}
+#Type here
+```
+
+#### b) Report the estimate of $\phi$ and interpret it in context.   
+
+Type here
