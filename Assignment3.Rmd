@@ -4,6 +4,12 @@ author: ""
 output: html_document
 ---
 
+```{r, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, message=FALSE, warning=FALSE, fig.height = 3, fig.width = 7)
+```
+
+
+
 In this assignment, we'll investigate factors related to prices of AirBnB's in Chicago. The data are part of Open Exercise 2 in Section 8.13.3 of the Roback and Legler text.  
 
 
@@ -23,19 +29,6 @@ Trinh (2018) collected data on 1561 Airbnb listings in Chicago from August 2016,
     - `BikeScore` = quality of the neighborhood for biking (0-100)
     - `PctBlack` = proportion of Black residents in a neighborhood
 
-We'll read in the data. 
-
-```{r}
-Airbnb <- read_csv("https://raw.githubusercontent.com/proback/BeyondMLR/master/data/airbnb.csv")
-```
-
-The full data are available at (https://github.com/proback/BeyondMLR/blob/master/data/airbnb.csv). 
-
-
-
-```{r, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE, message=FALSE, warning=FALSE, fig.height = 3, fig.width = 7)
-```
 
 ```{r}
 library(tidyverse)
@@ -44,6 +37,14 @@ library(lmerTest)
 library(gridExtra)
 ```
 
+
+We'll read in the data. 
+
+```{r}
+Airbnb <- read_csv("https://raw.githubusercontent.com/proback/BeyondMLR/master/data/airbnb.csv")
+```
+
+The full data are available at (https://github.com/proback/BeyondMLR/blob/master/data/airbnb.csv). 
 
 ## Question 1
 
