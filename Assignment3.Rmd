@@ -142,7 +142,7 @@ Type text here.
 
 Type text here. 
 
-#### g) Now fit a multilevel model that does not include an error term for slope at level two, that is, a model of the form:
+#### g) Now fit a multilevel model that does not include an error term for slope, that is, a model of the form:
 
 \[
 Y_{ij}  = [\alpha_{0}+\alpha_{1}\textrm{TransitScore}_{i}+\beta_{0}\textrm{bedrooms}_{ij}+\beta_{1}\textrm{TransitScore}_{i}\textrm{bedrooms}_{ij}] \\
@@ -187,7 +187,7 @@ Y_{ij}  = \alpha_{0} + [u_{i}+\epsilon_{ij}],
 
 #### Calculate and interpret the intraclass correlation coefficient. 
 
-#### k) Why are the estimates of $\sigma_u$ and $\sigma$ in (l) different than in (i). How do our interpretations change?   
+#### m) Why are the estimates of $\sigma_u$ and $\sigma$ in (l) different than in (i). How do our interpretations change?   
 
 ```{r}
 #type code here

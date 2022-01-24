@@ -38,7 +38,7 @@ Hospitals <- Hospitals %>% select(id, diverthours, year2013, totalvisits1, ems_b
 head(Hospitals)
 ```
 
-The full data are available at (https://github.com/proback/BeyondMLR/blob/master/data/airbnb.csv). 
+The full data are available at (https://github.com/proback/BeyondMLR/blob/master/data/ambulance3.csv). 
 
 Note that most hospitals have three observations, one for each year in the dataset. 
 
