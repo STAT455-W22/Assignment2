@@ -1,0 +1,145 @@
+---
+title: "Title"
+author: "Author Names"
+date: "Date"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE, message=FALSE, warning=FALSE, fig.height=4, fig.width=10)
+```
+
+
+```{r}
+# load packages - add any you would like
+library(tidyverse)
+library(lme4)
+library(lmerTest)
+library(gridExtra)
+library(knitr)
+```
+
+## Abstract 
+
+A 150 word abstract.
+
+
+\newpage
+
+### Background and Significance   
+
+Type background and significance section here. 
+
+### Data  
+
+Type data section here. Include captions with tables and graphs. Examples:  
+
+```{r}
+music <- read.csv("https://raw.githubusercontent.com/proback/BeyondMLR/master/data/musicdata.csv")
+T1 <- head(music %>% select(id, perform_type, memory, na, age, gender, instrument, years_study, mpqpem, mpqnem, mpqab ),10)       
+kable(T1, caption="First 10 rows of the dataset")
+```
+
+
+```{r, fig.cap="Negative affect (a) for all 497 performances and (b) average for each musician "}
+# Create Level2 data set by picking off one observation 
+# per subject, which would be easier if every subject 
+# had a diary entry labeled '1' - should be 37 rows 
+# and 6 columns (one per L2 variable)
+music.lev2 <-  music %>%
+  group_by(id) %>%
+  filter(row_number() == 1) %>%
+  select(id, gender:mpqnem)
+# Add average across all performances for each subject 
+# for EDA plots
+meanbysubj <- music %>% group_by(id) %>%
+  summarise(meanbysubj = mean(na, na.rm = TRUE))
+music.lev2 <- music.lev2 %>%
+  left_join(meanbysubj, by = "id")
+
+p1 <- ggplot(data=music,aes(x=na)) + 
+  geom_histogram(binwidth = 2, fill = "white",color = "black") + 
+  xlab("Negative Affect") + ylab("Frequency") + labs(title="(a) Individual Performances") 
+p2 <- ggplot(data=music.lev2,aes(x=meanbysubj)) + 
+  geom_histogram(binwidth = 2, fill = "white",color = "black") + 
+  xlab("Negative Affect") + ylab("Frequency") + labs(title="(b) Musician Averages") 
+grid.arrange(p1, p2, ncol=2)
+```
+
+
+
+### Methods  
+
+Type methods section here. Write your final model in equation form, like this:
+
+
+\begin{align*}
+Y_{ij} & = [\alpha_{0}+\alpha_{1}\textrm{Orch}_{i}+\beta_{0}\textrm{LargeEns}_{ij}+\beta_{1}\textrm{Orch}_{i}\textrm{LargeEns}_{ij}] \\
+    & + [u_{i}+v_{i}\textrm{LargeEns}_{ij}+\epsilon_{ij}]
+\end{align*}
+
+where,
+
+$$
+\left[ \begin{array}{c}
+            u_{i} \\ v_{i}
+          \end{array}  \right] \sim N \left( \left[
+          \begin{array}{c}
+            0 \\ 0
+          \end{array} \right], \left[
+          \begin{array}{cc}
+            \sigma_{u}^{2} & \rho_{uv}\sigma_{u}\sigma_v \\
+            \rho_{uv}\sigma_{u}\sigma_v & \sigma_{v}^{2}
+          \end{array} \right] \right) 
+$$
+
+and $\epsilon_{ij}\sim N(0,\sigma^2)$.   
+
+
+
+### Results  
+
+Write your results section here. Include the fixed and random effects tables, as below. 
+
+```{r}
+music <- music %>% mutate(orch = as.numeric(instrument=="orchestral instrument"),
+                          large = as.numeric(perform_type=="Large Ensemble"))
+M <- lmer(na ~ orch + large + orch:large +
+  (large|id), data = music)
+```
+
+```{r, fig.cap="Variance and Covariance Estimates for Random Effects"}
+kable(as.data.frame(VarCorr(M)))
+```
+
+
+```{r, fig.cap="Estimates of Fixed Effects"}
+kable(summary(M)$coefficients)
+```
+
+
+### Discussion and Conclusions   
+
+
+Type discussion section. 
+
+\newpage 
+
+### References  (5 points)
+
+References in APA format. For example:
+
+Sadler, M. E., & Miller, C. J. (2010). Performance anxiety: A longitudinal study of the roles of personality and experience in musicians. Social Psychological and Personality Science, 1(3), 280-287.
+
+Lin, M. C. (2019). An Investigation Of Music Performance Anxiety In Taiwanese Pianists, Vocalists, String And Wind Instrumentalists At The College Level.
+
+Stoeber, J., & Eismann, U. (2007). Perfectionism in young musicians: Relations with motivation, effort, achievement, and distress. Personality and Individual Differences, 43(8), 2182-2192.
+
+Roback, P., & Legler, J. (2021). Beyond Multiple Linear Regression: Applied Generalized Linear Models And Multilevel Models in R. CRC Press.
+
+
+
+\newpage
+
+## Appendix (optional)
+
