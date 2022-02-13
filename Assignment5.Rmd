@@ -1,0 +1,164 @@
+---
+title: "STAT 455: Assignment 5"
+author: "Your Name"
+output: html_document
+---
+
+
+
+```{r, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, message=FALSE, warning=FALSE, fig.height = 3, fig.width = 7)
+```
+
+```{r}
+library(tidyverse)
+```
+
+How does age affect male elephant mating patterns? An article by Poole(1989) investigated whether mating success in male elephants increases with age and whether there is a peak age for mating success. To address this question, the research team followed 41 elephants for one year and recorded both their ages and their number of matings. The data (Ramsey and Schafer) is found in `elephant.csv`, and the variables are:
+    - `MATINGS` = the number of matings in a given year
+    - `AGE` = the age of the elephant in years.
+    
+```{r}
+elephants <- read_csv("https://raw.githubusercontent.com/proback/BeyondMLR/master/data/elephant.csv")
+```
+
+
+
+## Question 1
+
+### a) Create a histogram of MATINGS.   
+
+```{r}
+#Type here
+```
+
+### b) Explain why a Poisson regression model might be more appropriate for modeling number of matings than an ordinary linear least squares regression model.    
+
+Type here
+
+### c) Inspite of what (b) suggests, let's first explore using a LLSR model. Plot MATINGS by AGE. Add a least squares regression line.        
+
+```{r}
+#Type here
+```
+
+
+### d) Fit an ordinary linear least squares regression model to the data display the model summary. 
+
+```{r}
+#Type here
+```
+
+
+### e) Display a normal quantile-quantile plot. What does the plot tell us about the appropriateness of the LLSR model? 
+
+```{r}
+#Type here
+```
+
+Type here. 
+
+
+## Question 2
+
+
+### a) Fit a Poisson regression model with a linear term for AGE. Display the model summary.
+
+```{r}
+#Type here
+```
+
+
+### b) Exponentiate and then interpret the coefficient for AGE. Give your answer in decimal form, rather than in the form of $e^b$. This makes the interpretation easier to understand. 
+
+Type here 
+
+
+### c) Construct a 95\% confidence interval for the regression coefficients and interpret the coefficients in context. Again, you should exponentiate the endpoints and give your answer in decimal form.   
+
+```{r}
+#Type here
+```
+
+Type here
+
+### d) Is there evidenece that the number of matings significantly related to age? Justify your answer by citing a specific value in the R output. 
+
+Type here
+
+### e) For each age, calculate the mean number of matings. Take the log of each mean and plot it by AGE. 
+
+```{r}
+#Type here
+```
+
+
+### f) What Poisson regression model assumption can we assess using the plot in (e)? What can we say about the appropriateness of this assumptions. 
+
+Type here. 
+
+### g) Fit a Poisson regression model that also includes a quadratic term for age. Display a summary of the model output. 
+
+```{r}
+#type here
+```
+
+
+### h) Use a drop in deviance test to determine there is evidence the second order model, containing the quadratic term, better explains variation in number of matings than the linear model. Display the output for the test and interpret the result. 
+
+```{r}
+#type here
+```
+
+Type here
+
+### i) Is the result of your hypothesis test in (h) consistent with your answer in (f)? Why or why not?
+
+Type here. 
+
+## Question 3
+
+### a) Perform a goodness-of-fit for the model including only a linear term for age? Does the model appear to adequately fit the data?
+
+```{r}
+#Type here
+```
+
+Type here. 
+
+### b) Now group the elephants by age, with age ranges of (25-30], (30-35], (30-40], (40-45], (45-50], (50-55]. Create histograms displying the number of matings by elephants in each age group. (Hint: use the `cut` function).
+
+```{r, }
+#Type here
+```
+
+
+### c) Create a table displaying the average number of matings in each age range, as well as the variance. Does this table raise any concerns about any assumptions related to the Poisson regression model? If so, which?
+
+```{r}
+#Type here
+```
+
+Type here. 
+
+### d) Why might a quasi-Poisson model help address the potential concern that arises in the table in (c)? 
+
+Type here. 
+
+### e) Fit a using quasi-Poisson regression. Display a summary of the model coefficients. Display the model summary. What is the estimated dispersion parameter? 
+
+```{r}
+#Type here
+```
+
+Type here. 
+
+### f) Compare the quasi-Poisson model to the Poisson model. How do the estimated coefficients change? How do the standard errors change? 
+
+Type here. 
+
+### g) Will confidence intervals from the quasi-Poisson model be wider or narrower than those associated with the Poisson model? Will t-statisics and p-values associated with model coefficients be larger or smaller. 
+
+Type here. 
+
+
