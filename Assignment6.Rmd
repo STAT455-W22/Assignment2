@@ -224,7 +224,7 @@ Type here or attach hand-written version.
 ```
 
 
-### d) Use the `glm()` function to fit the model to the HitsRuns dataframe. Verify that the estimates you calculated match those in the R output.   
+### f) Use the `glm()` function to fit the model to the HitsRuns dataframe. Verify that the estimates you calculated match those in the R output.   
 
 
 ```{r}
