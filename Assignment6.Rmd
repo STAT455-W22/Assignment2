@@ -1,0 +1,233 @@
+---
+title: "STAT 455: Assignment 6"
+author: ""
+date: ""
+output: html_document
+---
+
+
+
+
+```{r, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, message=FALSE, warning=FALSE, fig.height = 3, fig.width = 7)
+```
+
+```{r}
+library(tidyverse)
+```
+
+
+## Question 1: 
+
+
+An article in the *Journal of Animal Ecology* by Bishop(1972) investigated whether moths provide evidence of “survival of the fittest” with their camouflage traits.  Researchers glued equal numbers of light and dark morph moths in lifelike positions on tree trunks at 7 locations from 0 to 51.2 km from Liverpool.  They then recorded the number of moths removed after 24 hours, presumably by predators.  The hypothesis was that, since tree trunks near Liverpool were blackened by pollution, light morph moths would be more likely to be removed near Liverpool. 
+
+Data (Ramsey and Schafer, 2002) can be found in `moth.csv` and contains the variables below.  
+
+    -  `MORPH` = light or dark
+    -  `DISTANCE` = kilometers from Liverpool
+    -  `PLACED` = number of moths of a specific morph glued to trees at that location
+    -  `REMOVED` = number of moths of a specific morph removed after 24 hours
+
+```{r}
+moth <- read_csv("https://raw.githubusercontent.com/proback/BeyondMLR/master/data/moth.csv")
+```
+
+```{r}
+head(moth)
+```
+
+### a) We want to model the number of moths removed out of the total number placed, using morph and distance as explanatory variables. Explain why it makes sense to use a binomial logistic regression model in this context.      
+
+Type here
+
+### b) Fit the binomial logistic regression model. Display the summary output. Interpret the coefficients associated with both the `DISTANCE` and `MORPH` variables.  
+
+```{r}
+#Type here
+```
+
+Type here
+
+### c) Calculate the probability of a moth being removed assuming it is 15 km from Liverpool and is light `MORPH`. 
+
+Type here
+
+### d) Calculate the probability of a moth being removed assuming it is 35 km from Liverpool and is dark `MORPH`. 
+
+Type here
+
+### e) Create an empirical logit plot of logits vs. distance. Facet by morph. 
+
+```{r}
+#Type here
+```
+
+### f) What should we conclude from the plots in (d)? What do they say about the possibility of an interaction between morph and distance?
+
+Type here
+
+#### g) Create a model with `DISTANCE`, `MORPH`, and the interaction between both variables. Interpret all the coefficients. 
+
+```{r}
+#Type here
+```
+
+### f) How are the odds of removal expected to change for each additional one km in distance from Liverpool for light moths? What about for dark moths?    
+
+Type here
+
+#### g) Perform a drop-in-deviance test whether there is evidence of an interaction between distance and morph. Explain your conclusion in context.   
+
+```{r}
+#Type here
+```
+
+Type here
+
+#### h) Test the goodness-of-fit for the interaction model.  What can we conclude about this model?
+
+```{r}
+#Type here
+```
+
+Type here
+
+#### i) Fit a quasi-binomial model to the data. Display the model summary and report the estimated dispersion parameter. 
+
+```{r}
+#Type here
+```
+
+#### j) Considering the size of the dispersion paramter, and the results of the goodness of fit test, should we be concerned about overdispersion in these data? Explain your answer. 
+
+Type here
+
+#### k) Calculate confidence intervals for the model coefficients associated with the binomial model in (g) and the quasi-binomial model in (i). How do the widths of the intervals compare? Is this consistent with your observations in (h), (i), nad (j)? Explain. 
+
+Type here
+
+## Question 2
+
+#### U.S. National Medical Expenditure Survey. The data set NMES1988 in the AER package contains a sample of individuals over 65 who are covered by Medicare in order to assess the demand for health care through physician office visits, outpatient visits, ER visits, hospital stays, etc. The data can be accessed by installing and loading the AER package and then running data(NMES1988). More background information and references about the NMES1988 data can be found in help pages for the AER package. 
+
+```{r}
+library(AER)
+data(NMES1988)
+```
+
+#### a) Create a histogram of the number of visits. Describe your observations.   
+
+Type here
+
+### b) Calculate the mean number of visits for each of the three health categories, and the proportion of people in each category with zero visits. Then calculate the proportion of zeros you would expect to see under a Poisson distribution with observed mean for each category. What does this tell us about the validity of the Poisson model for these data? What kind of model would be a better fit?  
+
+```{r}
+#Type here
+```
+
+Type here
+
+#### c) Fit a ZIP model for the number of visits using chronic, health, and insurance as predictors for the Poisson count, and chronic and insurance as the predictors for the logistic part of the model. Then, provide interpretations in context for the following model parameters: chronic in the Poisson part of the model, poor health in the Poisson part of the model, insurance in the logistic part of the model
+
+```{r}
+#type here
+```
+
+Type here  
+
+### d) Calculate the probability that a person with one chronic condition, who is average health, and who has insurance never seeks any medical care.   
+
+Type here  
+
+
+### e) Assuming the person described in (c) does sometimes seek medical care, calculate the expected number of visits for that person during the span of this study.   
+
+Type here  
+
+
+## Question 3
+
+### For (a)-(c), refer to the dataframe below shows fictional data pertaining to the number of questions answered correctly on a 5-question, multiple choice quiz, taken by 3 different students. Also shown are the number of classes each student missed in the two weeks before the quiz.  
+
+```{r}
+MissedClasses <- c(0,1,3)
+Correct <- c(4, 5, 2)
+QuizResults <- data.frame(MissedClasses, Correct)
+QuizResults
+```
+
+### a) Let $Y_i$ represent the number of questions answered correctly by student $i$, and $x_i$ represent the number of missed classes. Consider a binomial logistic regression model of the form:
+
+\[
+Y_i\sim\text{Binom}(5,p_i), 
+\]
+
+where 
+\[
+log\left(\frac{p_i}{1-p_i}\right)=\beta_0+\beta_1x_i
+\]
+
+### Write the likelihood function in terms of $\beta_0$ and $\beta_1$.    
+
+type here or attach handwritten version
+
+### b) Write a function to numerically approximate the estimates of $\beta_0$ and $\beta_1$ that maximize the likelihood function. See 7.3.13 for an example.   
+
+### Hints:
+### 1) One way to do this is with a function that takes in 6 inputs: the number of correct answers by each of the 3 students, the number of classes missed by each of the 3 students, and the number of points to include in the grid search.
+### 2) You'll need to expand the grid search beyond -1 to 1. A range of -3 to 3 should be sufficient. )   
+
+```{r}
+#Type here
+```
+
+### c) Use the `glm()` function to fit the model to the QuizResults dataframe. Verify that the estimates you calculated match those in the R output.   
+
+```{r}
+#type here
+```
+
+
+### For (d)-(f), refer to the dataframe below shows fictional data pertaining to the number of runs scored by a baseball team, using the number of hits they got in a random sample of 3 games.   
+
+```{r}
+Runs <- c(5,2,7)
+Hits <- c(9, 7, 13)
+HitsRuns <- data.frame(Hits, Runs)
+HitsRuns
+```
+
+
+### d) Let $Y_i$ represent the number of runs scored in game $i$, and $x_i$ represent the hits. Consider a Poisson regression model of the form:
+
+\[
+Y_i\sim\text{Pois}(\lambda_i), 
+\]
+
+where 
+\[
+log\left(\lambda_i\right)=\beta_0+\beta_1x_i
+\]
+
+### Write the likelihood function in terms of $\beta_0$ and $\beta_1$.    
+
+Type here or attach hand-written version.
+
+### e) Write a function to numerically approximate the estimates of $\beta_0$ and $\beta_1$ that maximize the likelihood function. See 7.3.13 for an example.   
+
+### Hints:
+### 1) One way to do this is with a function that takes in 6 inputs: the number of runs in each of the 3 games, the number of hits in each of the 3 games, and the number of points to include in the grid search.
+### 2) A grid search between -0.5 and 0.5 should be sufficient for both parameters.  
+```{r}
+#Type here
+```
+
+
+### d) Use the `glm()` function to fit the model to the HitsRuns dataframe. Verify that the estimates you calculated match those in the R output.   
+
+
+```{r}
+#Type here
+```
+
