@@ -6,8 +6,7 @@ output: pdf_document
 ---
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = FALSE, message=FALSE, warning=FALSE, fig.height=4, fig.width=6)
-# feel free to change fig.height or fig.width here or in specific chunk headings. 
+knitr::opts_chunk$set(echo = FALSE, message=FALSE, warning=FALSE, fig.height=4, fig.width=10)
 ```
 
 
@@ -109,13 +108,13 @@ M <- lmer(na ~ orch + large + orch:large +
   (large|id), data = music)
 ```
 
-```{r, fig.cap="Variance and Covariance Estimates for Random Effects"}
-kable(as.data.frame(VarCorr(M)))
+```{r}
+kable(as.data.frame(VarCorr(M)), caption="Variance and Covariance Estimates for Random Effects")
 ```
 
 
-```{r, fig.cap="Estimates of Fixed Effects"}
-kable(summary(M)$coefficients)
+```{r}
+kable(summary(M)$coefficients, caption="Estimates of Fixed Effects")
 ```
 
 
@@ -126,7 +125,7 @@ Type discussion section.
 
 \newpage 
 
-### References  (5 points)
+### References 
 
 References in APA format. For example:
 
